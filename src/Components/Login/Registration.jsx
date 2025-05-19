@@ -4,6 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 import { Helmet } from "react-helmet";
 import { AuthContext } from "../../Context/AuthContext";
+import { updateProfile } from "firebase/auth";
 
 const Signup = () => {
   const { createUser, googleSignIn } = use(AuthContext);
@@ -21,33 +22,44 @@ const Signup = () => {
     uppercase: false,
   });
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+const handleRegister = (e) => {
+  e.preventDefault();
 
-    const allValid = Object.values(passwordRules).every(Boolean);
+  const name = e.target.name.value;
+  const photoURL = e.target.photoURL.value;
+  const email = e.target.email.value;
+  const password = e.target.password.value;
 
-    if (!allValid) {
-      setError("Please meet all password requirements.");
-      return;
-    }
+  const allValid = Object.values(passwordRules).every(Boolean);
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
+  if (!allValid) {
+    setError("Please meet all password requirements.");
+    return;
+  }
 
-    createUser(email, password)
-      .then((result) => {
-        console.log(result);
-               navigate("/login");
-      })
-      .catch((error) => {
-        console.error("Error during registration:", error);
-        setError("Registration failed: " + error.message);
+  if (password !== confirmPassword) {
+    setError("Passwords do not match.");
+    return;
+  }
+
+  createUser(email, password)
+    .then((result) => {
+      const user = result.user;
+
+      // ✅ Update user profile
+      return updateProfile(user, {
+        displayName: name,
+        photoURL: photoURL,
       });
-  };
+    })
+    .then(() => {
+      navigate("/login");
+    })
+    .catch((error) => {
+      console.error("Error during registration:", error);
+      setError("Registration failed: " + error.message);
+    });
+};
 
   const handleGoogleLogIn = () => {
     googleSignIn()
@@ -74,14 +86,14 @@ const Signup = () => {
   return (
     <main className="w-full min-h-[100vh] h-auto bg-[#d7367c] flex items-center justify-center sm:py-12 p-6">
        <Helmet>
-        <title>Registration || BillEase</title>
+        <title>Registration || RecipeBook</title>
       </Helmet>
       <form
         onSubmit={handleRegister}
         className="w-full sm:w-[900px] sm:max-w-[1000px] bg-white rounded-lg sm:py-6 sm:px-8 p-4 flex flex-col gap-5"
       >
         <h3 className="text-[1.8rem] font-[700] text-gray-900 text-center">
-          Sign Up
+          Registration
         </h3>
 
         {error && (
@@ -98,6 +110,7 @@ const Signup = () => {
           />
           <input
             type="text"
+            name="photoURL"
             placeholder="Photo URL"
             className="py-3 px-4 border focus:outline-[#d7367c] border-gray-300  rounded-lg w-full"
             required
@@ -174,7 +187,7 @@ const Signup = () => {
 
         <div className="text-[1rem] ">
           <input type="checkbox" name="checkbox" id="checkbox" />{" "}
-          <label htmlFor="checkbox" className="cursor-pointer">
+          <label htmlFor="checkbox" className="cursor-pointer text-gray-600">
             By clicking, I agree to register{" "}
             <a href="/*" className=" text-[#d7367c]">
               Terms of Use
@@ -185,7 +198,6 @@ const Signup = () => {
             </a>
           </label>
         </div>
-
         <div className="w-full flex items-center justify-center">
           <button
             type="submit"

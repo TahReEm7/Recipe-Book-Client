@@ -3,6 +3,7 @@ import ErrorPage from "../Error/ErrorPage";
 import HomeLayout from "../Home/HomeLayout";
 import Signin from "../Components/Login/Login";
 import Signup from "../Components/Login/Registration";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -19,11 +20,15 @@ const router = createBrowserRouter([
     },
      {
       path: "/add-recipe",
-      element: <div>Add recipe</div>,
+      element:(<PrivateRoute>
+                          <div>add recipe</div>
+                   </PrivateRoute>),
     },
      {
       path: "/my-recipe",
-      element: <div>my recipe</div>,
+     element:(<PrivateRoute>
+                          <div>my recipe</div>
+                   </PrivateRoute>),
     },
       ]
     },

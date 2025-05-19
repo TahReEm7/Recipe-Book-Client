@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import ScrollToTop from '../Components/ScrollToTop/ScrollToTop';
 import GlobalLoader from '../Components/Loader/Loader';
 import Navbar from '../Components/Header/Navbar';
+import Footer from '../Components/Footer/Footer';
 
 
 const HomeLayout = () => {
@@ -31,6 +32,9 @@ const HomeLayout = () => {
                     <Outlet />
                 </div>
             )}
+            <div>
+                <Footer></Footer>
+            </div>
         </div>
     );
 };
