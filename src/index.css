@@ -1,2 +1,9 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@tailwind utilities;
+
+
+a.active {
+    color: #d7367c;
+}
+    
