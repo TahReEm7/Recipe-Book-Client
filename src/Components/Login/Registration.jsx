@@ -204,7 +204,7 @@ const Signup = () => {
               to={"/login"}
               className="text-[1rem] text-[#d7367c] font-[500]"
             >
-              Signin
+              Login
             </Link>
           </span>
         </div>

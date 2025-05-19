@@ -25,9 +25,7 @@ const Signin = () => {
     signInUser(email, password)
       .then((result) => {
         console.log(result);
-        if (!result.user.emailVerified) {
-          setError("Please verify your email before logging in.");
-        } else {
+       {
           toast.success("Login successful! 👋");
           navigate(from, { replace: true });
         }
@@ -132,7 +130,7 @@ const Signin = () => {
         <button
           onClick={handleGoogleLogIn}
           type="button"
-          className=" cursor-pointer flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600"
+          className=" hover:bg-[#d7367c20] cursor-pointer flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600"
         >
           <FcGoogle className="text-[2rem]" />
           Login with Google
