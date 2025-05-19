@@ -2,9 +2,10 @@ import React, { use, useState } from "react";
 import { BsEyeFill, BsEyeSlash } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
-import { AuthContext } from "../../Context/AuthContext";
+
 import toast, { Toaster } from "react-hot-toast";
 import { Helmet } from "react-helmet";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Signin = () => {
   const { signInUser, googleSignIn } = use(AuthContext);
@@ -50,16 +51,16 @@ const Signin = () => {
   };
 
   return (
-    <main className="w-full h-auto sm:h-[100vh] bg-blue-300 flex items-center justify-center sm:p-0 p-6">
+    <main className="w-full h-auto sm:h-[100vh] bg-[#d7367c] flex items-center justify-center sm:p-0 p-6">
        <Helmet>
-        <title>Login || BillEase</title>
+        <title>Login || RecipeBook</title>
       </Helmet>
       <Toaster position="top-right" reverseOrder={false} />
       <form
         onSubmit={handleLogin}
         className="w-full sm:w-[40%] bg-white rounded-lg sm:py-6 sm:px-8 p-4 flex items-center justify-center flex-col gap-5"
       >
-        <h3 className="text-[1.8rem] font-[700] text-gray-900">Sign in</h3>
+        <h3 className="text-[1.8rem] font-[700] text-gray-900">Log in</h3>
 
         {/* Show error message */}
         {error && (
@@ -73,7 +74,7 @@ const Signin = () => {
           name="email"
           required
           placeholder="Email"
-          className="py-3 px-4 border focus:outline-blue-500 border-gray-300 mt-5 rounded-lg w-full"
+          className="py-3 px-4 border focus:outline-[#d7367c] border-gray-300 mt-5 rounded-lg w-full"
         />
         <div className="w-full relative">
           <input
@@ -81,7 +82,7 @@ const Signin = () => {
             placeholder="Password"
             name="password"
             required
-            className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
+            className="py-3 px-4 border focus:outline-[#d7367c] border-gray-300 rounded-lg w-full"
           />
           {active ? (
             <BsEyeSlash
@@ -98,13 +99,13 @@ const Signin = () => {
 
         <Link
           to="/forgot-password"
-          className="text-[1rem] text-blue-500 font-[500]"
+          className="text-[1rem] text-[#d7367c] font-[500]"
         >
           Forget password
         </Link>
         <button
           type="submit"
-          className=" py-3 px-4 bg-blue-500 text-white btn-block btn-primary btn rounded-lg mt-3 cursor-pointer"
+          className=" py-3 px-4 bg-[#d7367c] text-white btn-block btn-primary btn rounded-lg mt-3 cursor-pointer"
         >
           Login
         </button>
@@ -116,9 +117,9 @@ const Signin = () => {
           <span>
             <Link
               to={"/registration"}
-              className="text-[1rem] text-blue-500 font-[500] cursor-pointer"
+              className="text-[1rem] text-[#d7367c] font-[500] cursor-pointer"
             >
-              Signup
+              Registration
             </Link>
           </span>
         </div>

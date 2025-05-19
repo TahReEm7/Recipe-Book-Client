@@ -2,11 +2,8 @@ import React, { use, useState } from "react";
 import { BsEyeFill, BsEyeSlash } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
-import { AuthContext } from "../../Context/AuthContext";
-import { sendEmailVerification } from "firebase/auth";
-import { auth } from "../../Firebase/firebase.config";
-import toast from "react-hot-toast";
 import { Helmet } from "react-helmet";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Signup = () => {
   const { createUser, googleSignIn } = use(AuthContext);
@@ -44,10 +41,7 @@ const Signup = () => {
     createUser(email, password)
       .then((result) => {
         console.log(result);
-        sendEmailVerification(auth.currentUser).then(() => {
-          toast.success("Verification email sent! Please check your inbox.");
-          navigate("/login");
-        });
+               navigate("/login");
       })
       .catch((error) => {
         console.error("Error during registration:", error);
@@ -78,7 +72,7 @@ const Signup = () => {
   };
 
   return (
-    <main className="w-full min-h-[100vh] h-auto bg-blue-300 flex items-center justify-center sm:py-12 p-6">
+    <main className="w-full min-h-[100vh] h-auto bg-[#d7367c] flex items-center justify-center sm:py-12 p-6">
        <Helmet>
         <title>Registration || BillEase</title>
       </Helmet>
@@ -99,13 +93,13 @@ const Signup = () => {
             type="text"
             name="name"
             placeholder="Full Name"
-            className="py-3 px-4 border focus:outline-blue-500 border-gray-300  rounded-lg w-full"
+            className="py-3 px-4 border focus:outline-[#d7367c] border-gray-300  rounded-lg w-full"
             required
           />
           <input
             type="text"
             placeholder="Photo URL"
-            className="py-3 px-4 border focus:outline-blue-500 border-gray-300  rounded-lg w-full"
+            className="py-3 px-4 border focus:outline-[#d7367c] border-gray-300  rounded-lg w-full"
             required
           />
         </div>
@@ -114,7 +108,7 @@ const Signup = () => {
           type="email"
           name="email"
           placeholder="Email"
-          className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
+          className="py-3 px-4 border focus:outline-[#d7367c] border-gray-300 rounded-lg w-full"
           required
         />
 
@@ -126,7 +120,7 @@ const Signup = () => {
               placeholder="Password"
               value={password}
               onChange={handlePasswordChange}
-              className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
+              className="py-3 px-4 border focus:outline-[#d7367c] border-gray-300 rounded-lg w-full"
               required
             />
             {active ? (
@@ -181,12 +175,12 @@ const Signup = () => {
         <div className="text-[1rem] ">
           <input type="checkbox" name="checkbox" id="checkbox" />{" "}
           <label htmlFor="checkbox" className="cursor-pointer">
-            By clicking, I agree to signup{" "}
-            <a href="/*" className=" text-blue-500">
+            By clicking, I agree to register{" "}
+            <a href="/*" className=" text-[#d7367c]">
               Terms of Use
             </a>{" "}
             and{" "}
-            <a href="/*" className=" text-blue-500">
+            <a href="/*" className=" text-[#d7367c]">
               Privacy Policy
             </a>
           </label>
@@ -195,9 +189,9 @@ const Signup = () => {
         <div className="w-full flex items-center justify-center">
           <button
             type="submit"
-            className="w-full sm:w-[50%] py-3 px-4 bg-blue-500 text-white border-none outline-none rounded-lg mt-3"
+            className="btn btn-block py-3 px-4 bg-[#d7367c] text-white border-none outline-none rounded-lg mt-3"
           >
-            Sign up
+            Register
           </button>
         </div>
 
@@ -208,7 +202,7 @@ const Signup = () => {
           <span>
             <Link
               to={"/login"}
-              className="text-[1rem] text-blue-500 font-[500]"
+              className="text-[1rem] text-[#d7367c] font-[500]"
             >
               Signin
             </Link>
@@ -224,10 +218,10 @@ const Signup = () => {
         <button
           onClick={handleGoogleLogIn}
           type="button"
-          className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600"
+          className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600 hover:bg-[#d7367c20] cursor-pointer"
         >
           <FcGoogle className="text-[2rem]" />
-          Signup with Google
+          Login with Google
         </button>
       </form>
     </main>

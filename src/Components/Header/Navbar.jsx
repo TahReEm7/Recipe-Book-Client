@@ -1,6 +1,25 @@
-import { NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
+import { AuthContext } from "../../Context/AuthContext";
+import { use } from "react";
+import toast from "react-hot-toast";
+import ThemeToggle from "../../Context/ThemeContext";
 
 const Navbar = () => {
+   const { user,signOutUser,Balance } = use(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOutUser();
+      toast.success("Successfully logged out");
+  
+      setTimeout(() => {
+        navigate("/");
+      }, 1000); // Wait 1 second for toast to show
+    } catch (error) {
+      toast.error("Logout failed. Please try again.");
+    }
+  };
 
     const navLinks = [
         { name: 'Home', path: '/' },
@@ -45,9 +64,30 @@ const Navbar = () => {
                 </ul>
               </div>
               <div className="navbar-end flex gap-4">
-                <div>
-                  reg/log avatar
-                </div>
+                    {user ? (
+                    <>
+                        
+                        <div className="dropdown dropdown-end">
+                            <div tabIndex={0} role="button"><div className="avatar">
+                            <div className="w-10 cursor-pointer rounded-full ring ring-primary ring-offset-base-100 ring-offset-2" title="Current Balance">
+                                <img src={user?.photoURL} alt="User Avatar" />
+                            </div>
+                        </div></div>
+                            <div tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-5 shadow-md">
+                            <p className='p-2 font-bold text-center text-[#d7367c] text-lg'>{user?.displayName}</p>
+                            <button onClick={handleLogout} className="btn btn-outline btn-secondary">
+                            Logout
+                            </button>
+                            </div>
+                        </div>
+                    </>
+        ) : (
+          <>
+            <Link to="/login" className="btn btn-outline btn-error">Login</Link>
+            <Link to="/registration" className="btn btn-outline btn-error">Register</Link>
+          </>
+        )}
+      <ThemeToggle></ThemeToggle>
       </div>
             </div>
     );
