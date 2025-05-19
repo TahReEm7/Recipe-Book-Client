@@ -4,6 +4,7 @@ import HomeLayout from "../Home/HomeLayout";
 import Signin from "../Components/Login/Login";
 import Signup from "../Components/Login/Registration";
 import PrivateRoute from "./PrivateRoute";
+import Home from "../Pages/Homepage/Home";
 
 const router = createBrowserRouter([
     {
@@ -12,7 +13,7 @@ const router = createBrowserRouter([
       children : [
         {
           index: true,
-          element: <div>home</div> ,
+          Component : Home ,
         },
            {
       path: "/all-recipes",
