@@ -5,6 +5,9 @@ import Signin from "../Components/Login/Login";
 import Signup from "../Components/Login/Registration";
 import PrivateRoute from "./PrivateRoute";
 import Home from "../Pages/Homepage/Home";
+import AllRecipe from "../Pages/All Recipe/AllRecipe";
+import Addrecipe from "../Pages/Add Recipe'/Addrecipe";
+import MyRecipe from "../Pages/My Recipe/MyRecipe";
 
 const router = createBrowserRouter([
     {
@@ -17,18 +20,18 @@ const router = createBrowserRouter([
         },
            {
       path: "/all-recipes",
-      element: <div>All recipe</div>,
+      Component: AllRecipe,
     },
      {
       path: "/add-recipe",
       element:(<PrivateRoute>
-                          <div>add recipe</div>
+                          <Addrecipe></Addrecipe>
                    </PrivateRoute>),
     },
      {
       path: "/my-recipe",
      element:(<PrivateRoute>
-                          <div>my recipe</div>
+                          <MyRecipe></MyRecipe>
                    </PrivateRoute>),
     },
       ]
