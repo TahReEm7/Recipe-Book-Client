@@ -9,6 +9,7 @@ import AllRecipe from "../Pages/All Recipe/AllRecipe";
 import Addrecipe from "../Pages/Add Recipe'/Addrecipe";
 import MyRecipe from "../Pages/My Recipe/MyRecipe";
 import ForgotPass from "../Components/Login/ForgotPass";
+import Details from "../Pages/Recipe Details/Details";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
         },
            {
       path: "/all-recipes",
+       loader: () => fetch("http://localhost:3000/recipes"),
       Component: AllRecipe,
     },
      {
@@ -29,12 +31,15 @@ const router = createBrowserRouter([
                           <Addrecipe></Addrecipe>
                    </PrivateRoute>),
     },
-     {
-      path: "/my-recipe",
-     element:(<PrivateRoute>
-                          <MyRecipe></MyRecipe>
-                   </PrivateRoute>),
-    },
+  {
+  path: "/my-recipe",
+ 
+  element: (
+    <PrivateRoute>
+      <MyRecipe />
+    </PrivateRoute>
+  ),
+}
       ]
     },
     {
@@ -53,6 +58,13 @@ const router = createBrowserRouter([
       path: "/*",
       element: <ErrorPage/>,
     },
-  ]);
+     {
+      path: "/recipes/:id",
+        loader: ({ params }) =>
+       fetch(`http://localhost:3000/recipes/${params.id}`),
+      Component: Details,
+    },
+  ],
+);
   
   export default router;
