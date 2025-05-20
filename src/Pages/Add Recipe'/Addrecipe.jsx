@@ -94,11 +94,12 @@ const AddRecipe = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg my-10">
+   <div className="">
+     <div className="max-w-2xl mx-auto p-6 bg-gradient-to-br from-pink-600 via-pink-500 to-red-400 shadow-md rounded-lg my-10">
       <Helmet>
         <title>My Recipe || RecipeBook</title>
       </Helmet>
-      <h2 className="text-2xl font-bold text-[#d7367c] mb-4">Add New Recipe</h2>
+      <h2 className="text-2xl font-bold text-white mb-4">Add New Recipe</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
 
         {/* Image Source Option */}
@@ -240,12 +241,13 @@ const AddRecipe = () => {
 
         <button
           type="submit"
-          className="bg-[#d7367c] text-white px-4 py-2 rounded hover:bg-pink-700 transition"
+          className="btn btn-warning"
         >
           Add Recipe
         </button>
       </form>
     </div>
+   </div>
   );
 };
 

@@ -43,7 +43,7 @@ const TopRecipes = () => {
               </p>
               <Link
                 to={`/recipes/${recipe._id}`}
-                className="inline-block bg-red-400 text-white px-3 py-1 rounded hover:bg-red-600 transition"
+                className="btn btn-outline btn-error"
               >
                 View Details
               </Link>

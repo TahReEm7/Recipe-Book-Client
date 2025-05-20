@@ -10,61 +10,75 @@ import Addrecipe from "../Pages/Add Recipe'/Addrecipe";
 import MyRecipe from "../Pages/My Recipe/MyRecipe";
 import ForgotPass from "../Components/Login/ForgotPass";
 import Details from "../Pages/Recipe Details/Details";
+import Edit from "../Pages/Edit Recipe/Edit";
 
 const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <HomeLayout></HomeLayout>,
-      children : [
-        {
-          index: true,
-          Component : Home ,
-        },
-           {
-      path: "/all-recipes",
-       loader: () => fetch("http://localhost:3000/recipes"),
-      Component: AllRecipe,
-    },
-     {
-      path: "/add-recipe",
-      element:(<PrivateRoute>
-                          <Addrecipe></Addrecipe>
-                   </PrivateRoute>),
-    },
   {
-  path: "/my-recipe",
- 
-  element: (
-    <PrivateRoute>
-      <MyRecipe />
-    </PrivateRoute>
-  ),
-}
-      ]
-    },
-    {
-        path: "/login",
-        Component: Signin,
+    path: "/",
+    element: <HomeLayout></HomeLayout>,
+    children: [
+      {
+        index: true,
+        Component: Home,
       },
       {
-        path: "/registration",
-        Component: Signup,
+        path: "/all-recipes",
+        loader: () => fetch("http://localhost:3000/recipes"),
+        Component: AllRecipe,
       },
       {
-        path: "/forgot-password",
-        Component: ForgotPass ,
+        path: "/add-recipe",
+        element: (
+          <PrivateRoute>
+            <Addrecipe></Addrecipe>
+          </PrivateRoute>
+        ),
       },
-    {
-      path: "/*",
-      element: <ErrorPage/>,
-    },
-     {
-      path: "/recipes/:id",
-        loader: ({ params }) =>
-       fetch(`http://localhost:3000/recipes/${params.id}`),
-      Component: Details,
-    },
-  ],
-);
-  
-  export default router;
+      {
+        path: "/my-recipe",
+
+        element: (
+          <PrivateRoute>
+            <MyRecipe />
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/login",
+    Component: Signin,
+  },
+  {
+    path: "/registration",
+    Component: Signup,
+  },
+  {
+    path: "/forgot-password",
+    Component: ForgotPass,
+  },
+  {
+    path: "/*",
+    element: <ErrorPage />,
+  },
+  {
+    path: "/recipes/:id",
+    loader: ({ params }) => fetch(`http://localhost:3000/recipes/${params.id}`),
+    element: (
+      <PrivateRoute>
+        <Details></Details>
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/edit-recipe/:id",
+    loader: ({ params }) => fetch(`http://localhost:3000/recipes/${params.id}`),
+    element: (
+      <PrivateRoute>
+        <Edit></Edit>
+      </PrivateRoute>
+    ),
+  },
+]);
+
+export default router;
