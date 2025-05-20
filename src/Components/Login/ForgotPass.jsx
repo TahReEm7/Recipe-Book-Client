@@ -1,7 +1,8 @@
 import React, { use } from 'react';
-import { AuthContext } from '../../Context/AuthContext';
+
 import { useNavigate } from 'react-router';
 import { Helmet } from 'react-helmet';
+import { AuthContext } from '../../Context/AuthContext';
 
 const ForgotPass = () => {
     const {ResetPass,
@@ -19,7 +20,7 @@ const ForgotPass = () => {
     return (
         <div className="max-w-3xl mx-auto my-10 p-6 bg-base-200 shadow-xl rounded-xl">
            <Helmet>
-        <title>Forgot Password || BillEase</title>
+        <title>Forgot Password || Recipe Book</title>
       </Helmet>
              <div className="p-4">
       <h2 className="text-xl font-bold mb-2">Reset Password</h2>
@@ -32,7 +33,7 @@ const ForgotPass = () => {
       />
       <button
         onClick={handleReset}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
+        className="bg-red-400 text-white px-4 py-2 rounded"
       >
         Send Reset Link
       </button>

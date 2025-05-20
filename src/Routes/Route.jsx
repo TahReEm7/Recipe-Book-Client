@@ -8,6 +8,7 @@ import Home from "../Pages/Homepage/Home";
 import AllRecipe from "../Pages/All Recipe/AllRecipe";
 import Addrecipe from "../Pages/Add Recipe'/Addrecipe";
 import MyRecipe from "../Pages/My Recipe/MyRecipe";
+import ForgotPass from "../Components/Login/ForgotPass";
 
 const router = createBrowserRouter([
     {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/registration",
         Component: Signup,
+      },
+      {
+        path: "/forgot-password",
+        Component: ForgotPass ,
       },
     {
       path: "/*",
