@@ -10,7 +10,7 @@ import Addrecipe from "../Pages/Add Recipe'/Addrecipe";
 import MyRecipe from "../Pages/My Recipe/MyRecipe";
 import ForgotPass from "../Components/Login/ForgotPass";
 import Details from "../Pages/Recipe Details/Details";
-import Edit from "../Pages/Edit Recipe/Edit";
+
 
 const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/all-recipes",
-        loader: () => fetch("http://localhost:3000/recipes"),
+        loader: () => fetch("https://recipe-book-server-green.vercel.app/recipes"),
         Component: AllRecipe,
       },
       {
@@ -63,22 +63,14 @@ const router = createBrowserRouter([
   },
   {
     path: "/recipes/:id",
-    loader: ({ params }) => fetch(`http://localhost:3000/recipes/${params.id}`),
+    loader: ({ params }) => fetch(`https://recipe-book-server-green.vercel.app/recipes/${params.id}`),
     element: (
       <PrivateRoute>
         <Details></Details>
       </PrivateRoute>
     ),
   },
-  {
-    path: "/edit-recipe/:id",
-    loader: ({ params }) => fetch(`http://localhost:3000/recipes/${params.id}`),
-    element: (
-      <PrivateRoute>
-        <Edit></Edit>
-      </PrivateRoute>
-    ),
-  },
+
 ]);
 
 export default router;

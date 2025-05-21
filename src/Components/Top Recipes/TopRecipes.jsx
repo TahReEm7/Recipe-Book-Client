@@ -6,7 +6,7 @@ const TopRecipes = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/recipes")
+    fetch("https://recipe-book-server-green.vercel.app/recipes")
       .then((res) => res.json())
       .then((data) => {
         const sorted = data.sort((a, b) => (b.likeCount || 0) - (a.likeCount || 0));

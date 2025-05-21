@@ -55,7 +55,7 @@ const AllRecipe = () => {
 
     // Send PATCH request
     try {
-      await fetch(`http://localhost:3000/recipes/${id}/like`, {
+      await fetch(`https://recipe-book-server-green.vercel.app/recipes/${id}/like`, {
         method: "PATCH",
       });
     } catch (error) {
