@@ -1,51 +1,46 @@
 # 🍽️ Recipe Book
 
-Welcome to **Recipe Book**, a full-featured recipe management web application built using the MERN stack (MongoDB, Express, React, Node.js) with Firebase Authentication.
+Welcome to **Recipe Book** — your go-to web application for discovering, adding, and managing recipes online with a clean and interactive user experience.
 
-🔗 **Live Site:** [https://your-recipebook-url.com](https://your-recipebook-url.com)
-
----
-
-## ✨ Features
-
-- 🔐 **Authentication & Authorization**  
-  Firebase login system with email/password and Google sign-in. Includes protected routes for private pages like Add Recipe, My Recipes, and Recipe Details.
-
-- 📃 **Add, View & Manage Recipes**  
-  Logged-in users can add new recipes, view all available recipes, and manage their own submissions.
-
-- ❤️ **Like Recipes & Track Popularity**  
-  Users can like recipes, and the homepage highlights the top 6 liked recipes.
-
-- 🧭 **Dynamic Routing & Navigation**  
-  React Router is used for client-side routing, with dynamic paths for each recipe's details and a custom 404 page for unknown routes.
-
-- 💻 **Modern UI/UX**  
-  Responsive design with clean layout, banner slider, category filters, user avatar menus, and interactive modals using Tailwind CSS and component libraries.
+Live Site URL (Frontend): [https://recipebook.surge.sh](https://recipebooktahreem.surge.sh)  
 
 ---
 
-## 📁 Pages Overview
+## 🌟 Features
 
-- **Home Page:** Top liked recipes, slider/banner, and extra sections
-- **All Recipes:** All recipes shown in a 4-column grid
-- **Add Recipe (Private):** Add new recipe via a detailed form
-- **My Recipes (Private):** View, update, and delete your own recipes
-- **Recipe Details (Private):** Full recipe info + like button
-- **Login / Register:** Auth pages with email/password and Google
-- **Custom 404 Page:** Food-themed error page (no navbar/footer)
+- 🔐 **User Authentication**: Register, login, and sign in with Google via Firebase.
+- 🍳 **Recipe Management**: Add, view, update, and delete your own recipes.
+- ❤️ **Like Functionality**: Like any recipe; homepage highlights top-liked ones.
+- 🌓 **Dark/Light Mode**: Smooth theme toggle using Tailwind + DaisyUI.
+- 👤 **Private Routes**: Restrict access to “Add Recipe”, “My Recipes”, and “Details” for authenticated users only.
+- 📱 **Fully Responsive**: Designed to work beautifully on mobile, tablet, and desktop.
+- ⚠️ **Custom 404 Page**: Food-themed Lottie animation for better UX when a route doesn't exist.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React, React Router, Tailwind CSS, DaisyUI, Firebase Auth, Lottie
+- **Backend**: Express.js, MongoDB, Node Js
+- **Deployment**:
+  - **Frontend**: Deployed on [Surge]
+  - **Backend**: Hosted on [Vercel]
 
 ---
 
-## ⚙️ Tech Stack
+## 📌 Notes
 
-- Frontend: React, React Router, Tailwind CSS
-- Backend: Node.js, Express.js
-- Database: MongoDB
-- Authentication: Firebase
-- UI Enhancements: Toast/SweetAlert, Conditional rendering
+- Passwords must include at least:
+  - 1 uppercase letter
+  - 1 lowercase letter
+  - Minimum length: 6 characters
+- Social login is Google only.
+- No email verification or reset password 
 
 ---
+
+Feel free to fork this project and customize it as your own cooking playground! 🍜
+
 
 ## 📬 Contact
 
