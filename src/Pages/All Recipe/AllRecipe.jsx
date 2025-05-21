@@ -13,9 +13,31 @@ const AllRecipe = () => {
     (a, b) => (b.likeCount || 0) - (a.likeCount || 0)
   );
 
-  // We no longer need a global isOwner here
+  const [selectedCuisine, setSelectedCuisine] = useState("All");
 
-  const [recipes, setRecipes] = useState(sortedRecipes);
+  const cuisines = [
+    "All",
+    ...Array.from(new Set(loadedRecipes.map((r) => r.cuisine).filter(Boolean))),
+  ];
+
+  const filteredRecipes =
+    selectedCuisine === "All"
+      ? sortedRecipes
+      : sortedRecipes.filter((recipe) => recipe.cuisine === selectedCuisine);
+
+  const [recipes, setRecipes] = useState(filteredRecipes);
+
+  const handleCuisineChange = (e) => {
+    const selected = e.target.value;
+    setSelectedCuisine(selected);
+
+    const filtered =
+      selected === "All"
+        ? sortedRecipes
+        : sortedRecipes.filter((recipe) => recipe.cuisine === selected);
+
+    setRecipes(filtered);
+  };
 
   const handleLike = async (id) => {
     // Optimistically update UI
@@ -51,6 +73,22 @@ const AllRecipe = () => {
         <h2 className="text-3xl font-bold text-red-400 text-center my-6">
           All Recipes
         </h2>
+
+        {/* Dropdown Filter */}
+        <div className="mb-6 text-center">
+          <label className="mr-2 font-semibold text-red-500">Filter by Cuisine:</label>
+          <select
+            value={selectedCuisine}
+            onChange={handleCuisineChange}
+            className="px-3 py-1 rounded border border-red-400 focus:outline-none focus:ring-2 focus:ring-red-300"
+          >
+            {cuisines.map((cuisine) => (
+              <option key={cuisine} value={cuisine}>
+                {cuisine}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {recipes.map((recipe) => {
