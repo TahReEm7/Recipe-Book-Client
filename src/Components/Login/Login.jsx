@@ -56,9 +56,9 @@ const Signin = () => {
       <Toaster position="top-right" reverseOrder={false} />
       <form
         onSubmit={handleLogin}
-        className="w-full sm:w-[40%] bg-white rounded-lg sm:py-6 sm:px-8 p-4 flex items-center justify-center flex-col gap-5"
+        className="w-full sm:w-[40%] bg-base-300 rounded-lg sm:py-6 sm:px-8 p-4 flex items-center justify-center flex-col gap-5"
       >
-        <h3 className="text-[1.8rem] font-[700] text-gray-900">Log in</h3>
+        <h3 className="text-[1.8rem] font-[700] text-shadow-red-400">Log in</h3>
 
         {/* Show error message */}
         {error && (

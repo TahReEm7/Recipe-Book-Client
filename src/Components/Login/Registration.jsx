@@ -90,9 +90,9 @@ const handleRegister = (e) => {
       </Helmet>
       <form
         onSubmit={handleRegister}
-        className="w-full sm:w-[900px] sm:max-w-[1000px] bg-white rounded-lg sm:py-6 sm:px-8 p-4 flex flex-col gap-5"
+        className="w-full sm:w-[900px] sm:max-w-[1000px] bg-base-200 rounded-lg sm:py-6 sm:px-8 p-4 flex flex-col gap-5"
       >
-        <h3 className="text-[1.8rem] font-[700] text-gray-900 text-center">
+        <h3 className="text-[1.8rem] font-[700] text-shadow-red-400 text-center">
           Registration
         </h3>
 

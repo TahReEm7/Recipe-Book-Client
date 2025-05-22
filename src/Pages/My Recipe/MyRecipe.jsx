@@ -303,7 +303,7 @@ const MyRecipe = () => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start overflow-auto pt-12 z-50">
-          <div className="bg-white rounded-lg p-6 max-w-lg w-full relative shadow-lg">
+          <div className="bg-red-400 rounded-lg p-6 max-w-lg w-full relative shadow-lg">
             <button
               onClick={closeModal}
               className="absolute top-3 right-4 text-gray-700 font-bold text-3xl hover:text-red-500"
