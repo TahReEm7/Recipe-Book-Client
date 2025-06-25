@@ -11,6 +11,8 @@ import MyRecipe from "../Pages/My Recipe/MyRecipe";
 import ForgotPass from "../Components/Login/ForgotPass";
 import Details from "../Pages/Recipe Details/Details";
 
+import UpdateProfile from "../Components/Profile/UpdateProfile";
+import UserDashboard from "../Pages/Dashboard/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -22,8 +24,13 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
+        path: "/dashboard",
+        Component: UserDashboard,
+      },
+      {
         path: "/all-recipes",
-        loader: () => fetch("https://recipe-book-server-green.vercel.app/recipes"),
+        loader: () =>
+          fetch("https://recipe-book-server-green.vercel.app/recipes"),
         Component: AllRecipe,
       },
       {
@@ -58,19 +65,23 @@ const router = createBrowserRouter([
     Component: ForgotPass,
   },
   {
+    path: "/profile-update",
+    Component: UpdateProfile,
+  },
+  {
     path: "/*",
     element: <ErrorPage />,
   },
   {
     path: "/recipes/:id",
-    loader: ({ params }) => fetch(`https://recipe-book-server-green.vercel.app/recipes/${params.id}`),
+    loader: ({ params }) =>
+      fetch(`https://recipe-book-server-green.vercel.app/recipes/${params.id}`),
     element: (
       <PrivateRoute>
         <Details></Details>
       </PrivateRoute>
     ),
   },
-
 ]);
 
 export default router;

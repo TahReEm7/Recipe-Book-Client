@@ -24,9 +24,11 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", path: "/" },
+    { name: "Dashboard", path: "/dashboard" },
     { name: " All Recipes", path: "/all-recipes" },
     { name: "Add Recipe", path: "/add-recipe" },
     { name: "My Recipe", path: "/my-recipe" },
+  
   ];
   return (
     <div className="navbar bg-base-200 pr-10 md:px-10 shadow-sm">
@@ -101,7 +103,7 @@ const Navbar = () => {
                 <div className="avatar">
                   <div
                     className="w-10 cursor-pointer rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"
-                    title="Current Balance"
+                    title={user?.displayName || "User Avatar"}
                   >
                     <img src={user?.photoURL} alt="User Avatar" />
                   </div>

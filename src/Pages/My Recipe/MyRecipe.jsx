@@ -231,18 +231,6 @@ const MyRecipe = () => {
             <div className="p-4">
               <h3 className="text-xl font-bold text-red-500">{recipe.title}</h3>
               <p className="text-sm text-gray-700 mb-2">
-                <strong>Ingredients:</strong> {recipe.ingredients}
-              </p>
-              <p className="text-sm text-gray-700 mb-2">
-                <strong>Instructions:</strong> {recipe.instructions}
-              </p>
-              <p className="text-sm text-gray-700 mb-2">
-                <strong>Cuisine:</strong> {recipe.cuisine || "N/A"}
-              </p>
-              <p className="text-sm text-gray-700 mb-2">
-                <strong>Prep Time:</strong> {recipe.prepTime || 0} mins
-              </p>
-              <p className="text-sm text-gray-700 mb-2">
                 <strong>Categories:</strong>{" "}
                 {(recipe.categories || []).join(", ") || "N/A"}
               </p>
