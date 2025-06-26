@@ -2,10 +2,12 @@ import React, { use, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../Context/AuthContext';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router';
 
 const AddRecipe = () => {
   const { user } = use(AuthContext);
-
+  const navigate = useNavigate();
   const [imageSource, setImageSource] = useState('file');
   const [formData, setFormData] = useState({
     image: '',
@@ -55,10 +57,16 @@ const AddRecipe = () => {
       return;
     }
 
+    const { image, title, ingredients, instructions, cuisine, prepTime } = formData;
+    if (!image || !title || !ingredients || !instructions || !cuisine || !prepTime) {
+      toast.error('Please fill in all fields.');
+      return;
+    }
+
     const recipeData = {
       ...formData,
       user: {
-        name: user.name,
+        name: user.name || user.displayName,
         email: user.email,
         id: user.uid,
       },
@@ -84,121 +92,119 @@ const AddRecipe = () => {
           categories: [],
           likeCount: 0,
         });
+        navigate('/my-recipe');
       } else {
-        toast.error('Failed to add recipe');
+        toast.error('Failed to add recipe.');
       }
     } catch (error) {
-      toast.error('Error submitting recipe');
-      console.error(error);
+      toast.error('Error submitting recipe.');
     }
   };
 
   return (
-   <div className="">
-     <div className="max-w-2xl mx-auto p-6 bg-gradient-to-br from-pink-600 via-pink-500 to-red-400 shadow-md rounded-lg my-10">
+    <motion.div
+      className="min-h-screen px-4 py-12 bg-base-100"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
       <Helmet>
-        <title>My Recipe || RecipeBook</title>
+        <title>Add Recipe || RecipeBook</title>
       </Helmet>
-      <h2 className="text-2xl font-bold text-white mb-4">Add New Recipe</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
 
-        {/* Image Source Option */}
-        <div>
-          <label className="block font-medium mb-1">Choose Image Source</label>
-          <div className="flex gap-4 mb-2">
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="imageSource"
-                value="file"
-                checked={imageSource === 'file'}
-                onChange={() => {
-                  setImageSource('file');
-                  setFormData({ ...formData, image: '' });
-                }}
-              />
-              Upload File
-            </label>
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="imageSource"
-                value="url"
-                checked={imageSource === 'url'}
-                onChange={() => {
-                  setImageSource('url');
-                  setFormData({ ...formData, image: '' });
-                }}
-              />
-              Use Image URL
-            </label>
-          </div>
+      <motion.div
+        className="max-w-2xl mx-auto bg-white/10 backdrop-blur-md border border-gray-700 p-8 rounded-xl shadow-2xl"
+        initial={{ y: 40, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <h2 className="text-4xl font-bold text-center text-pink-400 mb-8">Add a New Recipe</h2>
 
-          {imageSource === 'file' ? (
-            <div>
-              <label className="block mb-1">Upload Image</label>
-              <input type="file" accept="image/*" onChange={handleImageUpload} className="w-full p-2 border rounded" />
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Image Option */}
+          <div>
+            <p className="mb-2">Image Source:</p>
+            <div className="flex items-center gap-4 mb-2">
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  checked={imageSource === 'file'}
+                  onChange={() => {
+                    setImageSource('file');
+                    setFormData({ ...formData, image: '' });
+                  }}
+                />
+                Upload
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  checked={imageSource === 'url'}
+                  onChange={() => {
+                    setImageSource('url');
+                    setFormData({ ...formData, image: '' });
+                  }}
+                />
+                URL
+              </label>
             </div>
-          ) : (
-            <div>
-              <label className="block mb-1">Image URL</label>
+
+            {imageSource === 'file' ? (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="w-full p-2 bg-white/20 rounded border border-gray-500"
+              />
+            ) : (
               <input
                 type="text"
                 name="image"
                 value={formData.image}
                 onChange={handleImageUrlChange}
                 placeholder="https://example.com/image.jpg"
-                className="w-full p-2 border rounded"
+                className="w-full p-2 bg-white/20 rounded border border-gray-500"
               />
-            </div>
-          )}
+            )}
 
-          {formData.image && <img src={formData.image} alt="Preview" className="w-40 mt-2" />}
-        </div>
+            {formData.image && (
+              <img
+                src={formData.image}
+                alt="Preview"
+                className="mt-3 w-32 h-24 object-cover rounded border border-gray-600"
+              />
+            )}
+          </div>
 
-        <div>
-          <label className="block mb-1">Recipe Title</label>
+          {/* Form Fields */}
           <input
             type="text"
             name="title"
             value={formData.title}
             onChange={handleChange}
             placeholder="Recipe Title"
-            required
-            className="w-full p-2 border rounded"
+            className="w-full p-2 bg-white/20 rounded border border-gray-500"
           />
-        </div>
-
-        <div>
-          <label className="block mb-1">Ingredients (comma-separated)</label>
           <textarea
             name="ingredients"
             value={formData.ingredients}
             onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
-          ></textarea>
-        </div>
-
-        <div>
-          <label className="block mb-1">Instructions</label>
+            placeholder="Ingredients (comma-separated)"
+            className="w-full p-2 bg-white/20 rounded border border-gray-500"
+            rows={3}
+          />
           <textarea
             name="instructions"
             value={formData.instructions}
             onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
-          ></textarea>
-        </div>
-
-        <div>
-          <label className="block mb-1">Cuisine Type</label>
+            placeholder="Instructions"
+            className="w-full p-2 bg-white/20 rounded border border-gray-500"
+            rows={4}
+          />
           <select
             name="cuisine"
             value={formData.cuisine}
             onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
+            className="w-full p-2 bg-white/20 rounded border border-gray-500"
           >
             <option value="">Select Cuisine</option>
             {cuisineOptions.map((type) => (
@@ -207,47 +213,47 @@ const AddRecipe = () => {
               </option>
             ))}
           </select>
-        </div>
-
-        <div>
-          <label className="block mb-1">Preparation Time (minutes)</label>
           <input
             type="number"
             name="prepTime"
             value={formData.prepTime}
             onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
+            placeholder="Preparation Time (minutes)"
+            className="w-full p-2 bg-white/20 rounded border border-gray-500"
           />
-        </div>
 
-        <div>
-          <p className="block mb-1 font-medium">Categories:</p>
-          <div className="flex flex-wrap gap-3">
-            {categoriesList.map((cat) => (
-              <label key={cat} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  name="categories"
-                  value={cat}
-                  checked={formData.categories.includes(cat)}
-                  onChange={handleChange}
-                />
-                {cat}
-              </label>
-            ))}
+          {/* Categories */}
+          <div>
+            <p className="mb-2">Categories:</p>
+            <div className="flex flex-wrap gap-4">
+              {categoriesList.map((cat) => (
+                <label key={cat} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    value={cat}
+                    checked={formData.categories.includes(cat)}
+                    onChange={handleChange}
+                  />
+                  {cat}
+                </label>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <button
-          type="submit"
-          className="btn btn-warning"
-        >
-          Add Recipe
-        </button>
-      </form>
-    </div>
-   </div>
+          {/* Submit */}
+          <div className="text-center pt-4">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              type="submit"
+              className="bg-pink-600 hover:bg-pink-700 transition px-6 py-2 rounded-lg shadow-lg font-semibold text-white"
+            >
+              Add Recipe
+            </motion.button>
+          </div>
+        </form>
+      </motion.div>
+    </motion.div>
   );
 };
 

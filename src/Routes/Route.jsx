@@ -13,6 +13,7 @@ import Details from "../Pages/Recipe Details/Details";
 
 import UpdateProfile from "../Components/Profile/UpdateProfile";
 import UserDashboard from "../Pages/Dashboard/Dashboard";
+import Support from "../Components/FAQ/Faq";
 
 const router = createBrowserRouter([
   {
@@ -50,37 +51,47 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/recipes/:id",
+        loader: ({ params }) =>
+          fetch(
+            `https://recipe-book-server-green.vercel.app/recipes/${params.id}`
+          ),
+        element: (
+          <PrivateRoute>
+            <Details></Details>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/login",
+        Component: Signin,
+      },
+      {
+        path: "/registration",
+        Component: Signup,
+      },
+      {
+        path: "/forgot-password",
+        Component: ForgotPass,
+      },
+      {
+        path: "/profile-update",
+        element: (
+          <PrivateRoute>
+            <UpdateProfile></UpdateProfile>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
-    path: "/login",
-    Component: Signin,
-  },
-  {
-    path: "/registration",
-    Component: Signup,
-  },
-  {
-    path: "/forgot-password",
-    Component: ForgotPass,
-  },
-  {
-    path: "/profile-update",
-    Component: UpdateProfile,
+        path : "/support",
+        Component : Support,
   },
   {
     path: "/*",
     element: <ErrorPage />,
-  },
-  {
-    path: "/recipes/:id",
-    loader: ({ params }) =>
-      fetch(`https://recipe-book-server-green.vercel.app/recipes/${params.id}`),
-    element: (
-      <PrivateRoute>
-        <Details></Details>
-      </PrivateRoute>
-    ),
   },
 ]);
 

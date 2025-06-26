@@ -210,42 +210,44 @@ const MyRecipe = () => {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
-      <h2 className="text-4xl font-bold text-red-400 mb-6 text-center">
-        My Recipes
-      </h2>
+  <div className="max-w-6xl mx-auto px-4 py-10">
+    <h2 className="text-4xl font-bold text-center text-red-500 mb-10">My Recipes</h2>
+
+    {loading ? (
+      <GlobalLoader />
+    ) : myRecipes.length === 0 ? (
+      <NoItem />
+    ) : (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {myRecipes.map((recipe) => (
           <div
             key={recipe._id}
-            className="bg-white rounded-lg shadow-md border overflow-hidden"
+            className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl border border-gray-200"
           >
             <img
-              src={
-                recipe.image ||
-                "https://via.placeholder.com/400x200?text=No+Image"
-              }
+              src={recipe.image || "https://via.placeholder.com/400x200?text=No+Image"}
               alt={recipe.title}
               className="w-full h-48 object-cover"
             />
+
             <div className="p-4">
-              <h3 className="text-xl font-bold text-red-500">{recipe.title}</h3>
-              <p className="text-sm text-gray-700 mb-2">
-                <strong>Categories:</strong>{" "}
-                {(recipe.categories || []).join(", ") || "N/A"}
+              <h3 className="text-xl font-semibold text-gray-800 truncate">{recipe.title}</h3>
+              <p className="text-sm text-gray-600 mt-1">
+                <strong>Categories:</strong> {recipe.categories?.join(", ") || "N/A"}
               </p>
-              <div className="flex justify-center gap-4 text-red-600 mt-4">
+
+              <div className="flex justify-end mt-4 gap-3">
                 <button
                   onClick={() => navigate(`/recipes/${recipe._id}`)}
                   title="View"
-                  className="cursor-pointer"
+                  className="text-blue-500 hover:text-blue-700 bg-blue-100 p-2 rounded-full transition duration-200"
                 >
                   <FaEye />
                 </button>
                 <button
                   onClick={() => openEditModal(recipe)}
                   title="Edit"
-                  className="cursor-pointer"
+                  className="text-yellow-500 hover:text-yellow-600 bg-yellow-100 p-2 rounded-full transition duration-200"
                 >
                   <FaEdit />
                 </button>
@@ -256,12 +258,12 @@ const MyRecipe = () => {
                   className={`${
                     deletingId === recipe._id
                       ? "opacity-50 cursor-wait"
-                      : "cursor-pointer"
-                  }`}
+                      : "text-red-500 hover:text-red-600 bg-red-100"
+                  } p-2 rounded-full transition duration-200`}
                 >
                   {deletingId === recipe._id ? (
                     <svg
-                      className="animate-spin h-5 w-5 text-red-600"
+                      className="animate-spin h-5 w-5 text-red-500"
                       viewBox="0 0 24 24"
                     >
                       <circle
@@ -287,185 +289,195 @@ const MyRecipe = () => {
           </div>
         ))}
       </div>
+    )}
 
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start overflow-auto pt-12 z-50">
-          <div className="bg-red-400 rounded-lg p-6 max-w-lg w-full relative shadow-lg">
-            <button
-              onClick={closeModal}
-              className="absolute top-3 right-4 text-gray-700 font-bold text-3xl hover:text-red-500"
-              title="Close"
+{/* Modal */}
+{isModalOpen && (
+  <div className="fixed inset-0 bg-base-300 bg-opacity-40 flex justify-center items-start z-50 overflow-y-auto py-12 px-4">
+    <div className="relative bg-base-100 bg-opacity-90 backdrop-blur-xl rounded-2xl shadow-2xl max-w-2xl w-full p-8 border border-gray-200">
+
+      {/* Close Button */}
+      <button
+        onClick={closeModal}
+        className="absolute top-3 right-4 text-gray-700 text-2xl hover:text-red-600 font-bold"
+        title="Close"
+      >
+        &times;
+      </button>
+
+      {/* Header */}
+      <h2 className="text-3xl font-bold text-center text-red-500 mb-6">Edit Recipe</h2>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+
+        {/* Image Upload */}
+        <div>
+          <label className="block font-semibold mb-1 text-gray-700">Image Source</label>
+          <div className="flex gap-6 items-center mb-3">
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="imageSource"
+                value="file"
+                checked={imageSource === "file"}
+                onChange={() => {
+                  setImageSource("file");
+                  setFormData((prev) => ({ ...prev, image: "" }));
+                  setImageFile(null);
+                }}
+              />
+              Upload File
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="imageSource"
+                value="url"
+                checked={imageSource === "url"}
+                onChange={() => {
+                  setImageSource("url");
+                  setFormData((prev) => ({ ...prev, image: "" }));
+                  setImageFile(null);
+                }}
+              />
+              Use URL
+            </label>
+          </div>
+
+          {imageSource === "file" ? (
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="w-full p-2 border rounded"
+            />
+          ) : (
+            <input
+              type="text"
+              name="image"
+              value={formData.image}
+              onChange={handleImageUrlChange}
+              placeholder="https://example.com/image.jpg"
+              className="w-full p-2 border rounded"
+            />
+          )}
+
+          {formData.image && (
+            <img
+              src={formData.image}
+              alt="Preview"
+              className="mt-3 w-36 h-24 object-cover rounded-lg border shadow"
+            />
+          )}
+        </div>
+
+        {/* Title */}
+        <div>
+          <label className="block font-semibold mb-1 text-gray-700">Recipe Title</label>
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter title"
+            required
+            className="w-full p-2 border rounded"
+          />
+        </div>
+
+        {/* Ingredients */}
+        <div>
+          <label className="block font-semibold mb-1 text-gray-700">Ingredients</label>
+          <textarea
+            name="ingredients"
+            value={formData.ingredients}
+            onChange={handleChange}
+            placeholder="e.g. 2 cups flour, 1 tsp sugar..."
+            required
+            rows="3"
+            className="w-full p-2 border rounded"
+          ></textarea>
+        </div>
+
+        {/* Instructions */}
+        <div>
+          <label className="block font-semibold mb-1 text-gray-700">Instructions</label>
+          <textarea
+            name="instructions"
+            value={formData.instructions}
+            onChange={handleChange}
+            placeholder="Step-by-step instructions"
+            required
+            rows="3"
+            className="w-full p-2 border rounded"
+          ></textarea>
+        </div>
+
+        {/* Cuisine & Time */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block font-semibold mb-1 text-gray-700">Cuisine Type</label>
+            <select
+              name="cuisine"
+              value={formData.cuisine}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border rounded"
             >
-              &times;
-            </button>
-            <h2 className="text-2xl font-semibold text-center text-red-500 mb-4">
-              Edit Recipe
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Image Source Option */}
-              <div>
-                <label className="block font-medium mb-1">
-                  Choose Image Source
-                </label>
-                <div className="flex gap-4 mb-2">
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="imageSource"
-                      value="file"
-                      checked={imageSource === "file"}
-                      onChange={() => {
-                        setImageSource("file");
-                        setFormData((prev) => ({ ...prev, image: "" }));
-                        setImageFile(null);
-                      }}
-                    />
-                    Upload File
-                  </label>
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="imageSource"
-                      value="url"
-                      checked={imageSource === "url"}
-                      onChange={() => {
-                        setImageSource("url");
-                        setFormData((prev) => ({ ...prev, image: "" }));
-                        setImageFile(null);
-                      }}
-                    />
-                    Use Image URL
-                  </label>
-                </div>
+              <option value="">-- Select Cuisine --</option>
+              {cuisineOptions.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
 
-                {imageSource === "file" ? (
-                  <div>
-                    <label className="block mb-1">Upload Image</label>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                      className="w-full p-2 border rounded"
-                    />
-                  </div>
-                ) : (
-                  <div>
-                    <label className="block mb-1">Image URL</label>
-                    <input
-                      type="text"
-                      name="image"
-                      value={formData.image}
-                      onChange={handleImageUrlChange}
-                      placeholder="https://example.com/image.jpg"
-                      className="w-full p-2 border rounded"
-                    />
-                  </div>
-                )}
-
-                {formData.image && (
-                  <img
-                    src={formData.image}
-                    alt="Preview"
-                    className="w-40 mt-2 rounded"
-                  />
-                )}
-              </div>
-
-              <div>
-                <label className="block mb-1">Recipe Title</label>
-                <input
-                  type="text"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleChange}
-                  placeholder="Recipe Title"
-                  required
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-
-              <div>
-                <label className="block mb-1">Ingredients (comma-separated)</label>
-                <textarea
-                  name="ingredients"
-                  value={formData.ingredients}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-2 border rounded"
-                ></textarea>
-              </div>
-
-              <div>
-                <label className="block mb-1">Instructions</label>
-                <textarea
-                  name="instructions"
-                  value={formData.instructions}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-2 border rounded"
-                ></textarea>
-              </div>
-
-              <div>
-                <label className="block mb-1">Cuisine Type</label>
-                <select
-                  name="cuisine"
-                  value={formData.cuisine}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-2 border rounded"
-                >
-                  <option value="">Select Cuisine</option>
-                  {cuisineOptions.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block mb-1">Preparation Time (minutes)</label>
-                <input
-                  type="number"
-                  name="prepTime"
-                  value={formData.prepTime}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-2 border rounded"
-                  min={1}
-                />
-              </div>
-
-              <div>
-                <p className="block mb-1 font-medium">Categories:</p>
-                <div className="flex flex-wrap gap-3">
-                  {categoriesList.map((cat) => (
-                    <label key={cat} className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        name="categories"
-                        value={cat}
-                        checked={formData.categories.includes(cat)}
-                        onChange={handleChange}
-                      />
-                      {cat}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600"
-              >
-                Save Changes
-              </button>
-            </form>
+          <div>
+            <label className="block font-semibold mb-1 text-gray-700">Prep Time (minutes)</label>
+            <input
+              type="number"
+              name="prepTime"
+              value={formData.prepTime}
+              onChange={handleChange}
+              required
+              min={1}
+              className="w-full p-2 border rounded"
+            />
           </div>
         </div>
-      )}
+
+        {/* Categories */}
+        <div>
+          <label className="block font-semibold mb-2 text-gray-700">Categories</label>
+          <div className="flex flex-wrap gap-3">
+            {categoriesList.map((cat) => (
+              <label key={cat} className="flex items-center gap-2 bg-gray-100 px-2 py-1 rounded hover:bg-red-100">
+                <input
+                  type="checkbox"
+                  name="categories"
+                  value={cat}
+                  checked={formData.categories.includes(cat)}
+                  onChange={handleChange}
+                />
+                {cat}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="w-full py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition"
+        >
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

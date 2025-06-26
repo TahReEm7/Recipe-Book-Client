@@ -7,6 +7,10 @@ import Faq from "../../Components/FAQ/Faq";
 import HowItWork from "../../Components/HowItWorks/HowItWork";
 import TopRecipes from "../../Components/Top Recipes/TopRecipes";
 import { Helmet } from "react-helmet";
+import Newsletter from "../../Components/Newsletter/Newsletter";
+import PromotionalBanner from "../../Components/PromotionalBanner/PromotionalBanner";
+import OfferSection from "../../Components/OfferSection/OfferSection";
+
 
 const Home = () => {
   return (
@@ -21,6 +25,15 @@ const Home = () => {
         viewport={{ once: true, amount: 0.3 }}
       >
         <Banner />
+      </motion.div>
+
+             <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <OfferSection></OfferSection>
       </motion.div>
 
       <motion.div
@@ -56,10 +69,10 @@ const Home = () => {
         transition={{ duration: 0.6, delay: 0.3 }}
         viewport={{ once: true, amount: 0.3 }}
       >
-        <Faq />
+       <Newsletter></Newsletter>
       </motion.div>
 
-      <motion.div
+       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
@@ -67,6 +80,16 @@ const Home = () => {
       >
         <Feedback />
       </motion.div>
+
+           <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <PromotionalBanner></PromotionalBanner>
+      </motion.div>
+
     </div>
   );
 };

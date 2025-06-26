@@ -1,68 +1,77 @@
-import React from "react";
+import React from 'react';
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaGithub } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <div>
-      <footer className="footer footer-horizontal footer-center bg-[#d7367c] p-10 text-white">
-        <aside>
-          <div className="flex justify-center items-center gap-1">
-            <span className="text-3xl font-bold">🍳Recipe</span>
-            <span className="text-3xl font-bold text-blue-200">Book</span>
-          </div>
-          <p className="font-bold">
-            Tahreem Industries Ltd.
-            <br />
-           <div>
-             Email: <a href="mailto:tahreemhossain0@gmail.com" className="underline">tahreemhossain0@gmail.com</a><br />
-            Phone: <a href="tel:+8801319550316" className="underline">+8801319550316</a>
-           </div>
+    <footer className="bg-gradient-to-br from-pink-600 via-pink-500 to-red-400 text-white pt-10 pb-6 px-6 md:px-20">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-10 border-b border-white-700 pb-8">
+        {/* Brand */}
+        <div>
+           <a className="">
+          <span className="text-3xl font-bold text-[#35091c]">🍳Recipe</span>
+          <span className="text-3xl font-bold text-shadow-blue-200">Book</span>
+        </a>
+          <p className="text-sm text-white-400 mt-5">
+          Discover, Create, and Share Delicious Recipes from Around the World 
+
+
           </p>
-          <p>© {new Date().getFullYear()} All rights reserved.</p>
-        </aside>
+        </div>
 
-        <nav>
-          <div className="flex gap-6">
-            {/* YouTube */}
+        {/* Navigation */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4 text-black">Quick Links</h2>
+          <ul className="space-y-2 text-white-400">
+            <li><a href="/" className="hover:text-gray-800">Home</a></li>
+            <li><a href="/dashboard" className="hover:text-gray-800">Dashboard</a></li>
+             <li><a href="/support" className="hover:text-gray-800">Support</a></li>
+          </ul>
+        </div>
+
+        {/* Contact Info */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4 text-black">Contact Us</h2>
+          <p className="text-white-400 text-sm">Email: tahreemhossain0@gmail.com</p>
+          <p className="text-white-400 text-sm">Phone: 01319550316</p>
+          <p className="text-white-400 text-sm">Location: Dhaka, Bangladesh</p>
+        </div>
+
+        {/* Social Media */}
+       <div>
+          <h2 className="text-xl font-semibold mb-4 text-black">Follow Me</h2>
+          <div className="flex space-x-4">
             <a
-              href="https://www.youtube.com/"
+              href="https://github.com/TahReEm7"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="YouTube"
+              className="bg-white-700 p-2 rounded-full hover:bg-white-600 transition"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0C.487 3.45.028 5.804 0 12c.028 6.185.487 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
-              </svg>
+              <FaGithub />
             </a>
-
-            {/* Facebook */}
             <a
-              href="https://www.facebook.com/"
+              href="https://www.linkedin.com/in/tahreem-hossain"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Facebook"
+              className="bg-blue-800 p-2 rounded-full hover:bg-blue-900 transition"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M9 8H6v4h3v12h5V12h3.642l.358-4H14V6.333C14 5.378 14.192 5 15.115 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z" />
-              </svg>
+              <FaLinkedinIn />
             </a>
-
-            {/* Twitter */}
             <a
-              href="https://www.twitter.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter"
+              href="mailto:tahreemhossain0@gmail.com"
+              className="bg-red-600 p-2 rounded-full hover:bg-red-700 transition"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 4.557a9.93 9.93 0 0 1-2.828.775 4.932 4.932 0 0 0 2.165-2.724 9.864 9.864 0 0 1-3.127 1.195 4.92 4.92 0 0 0-8.384 4.482C7.691 8.094 4.066 6.13 1.64 3.161a4.822 4.822 0 0 0-.666 2.475c0 1.708.869 3.213 2.188 4.096a4.904 4.904 0 0 1-2.229-.616v.06c0 2.385 1.693 4.374 3.946 4.827a4.935 4.935 0 0 1-2.224.085 4.923 4.923 0 0 0 4.6 3.417A9.867 9.867 0 0 1 0 19.54a13.936 13.936 0 0 0 7.548 2.212c9.057 0 14.01-7.513 14.01-14.01 0-.213-.004-.426-.014-.637A10.025 10.025 0 0 0 24 4.557z" />
-              </svg>
+              <FaInstagram className="transform rotate-45" />
             </a>
           </div>
-        </nav>
-      </footer>
-    </div>
+        </div>
+      </div>
+
+
+      <p className="text-center text-white-500 text-sm mt-6">
+        &copy; {new Date().getFullYear()} Tahreem Hossain. All rights reserved.
+      </p>
+    </footer>
   );
 };
 
 export default Footer;
-

@@ -3,21 +3,32 @@ import { AuthContext } from "../../Context/AuthContext";
 import { Link } from "react-router";
 import Profile from "../../Components/Profile/Profile";
 import {
-  BarChart, Bar,
-  LineChart, Line,
-  XAxis, YAxis,
-  CartesianGrid, Tooltip,
+  BarChart,
+  Bar,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import NoItem from "../../Error/NoItem";
+import PromotionalBanner from "../../Components/PromotionalBanner/PromotionalBanner";
 
 const UserDashboard = () => {
   const { user } = useContext(AuthContext);
-  const [stats, setStats] = useState({ totalUserRecipes: 0, totalUserLikes: 0 });
+  const [stats, setStats] = useState({
+    totalUserRecipes: 0,
+    totalUserLikes: 0,
+  });
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`https://recipe-book-server-green.vercel.app/user-dashboard?email=${user.email}`)
+      fetch(
+        `https://recipe-book-server-green.vercel.app/user-dashboard?email=${user.email}`
+      )
         .then((res) => res.json())
         .then((data) => {
           setStats(data);
@@ -29,29 +40,39 @@ const UserDashboard = () => {
 
   // Chart Data
   const recipesByMonth = Array.from({ length: 12 }, (_, i) => {
-    const monthName = new Date(0, i).toLocaleString("default", { month: "short" });
+    const monthName = new Date(0, i).toLocaleString("default", {
+      month: "short",
+    });
     return {
       month: monthName,
-      count: recipes.filter(r => new Date(r.createdAt).getMonth() === i).length
+      count: recipes.filter((r) => new Date(r.createdAt).getMonth() === i)
+        .length,
     };
   });
 
-  const likeTrend = recipes.map(recipe => ({
+  const likeTrend = recipes.map((recipe) => ({
     name: new Date(recipe.createdAt).toLocaleDateString(),
-    likes: recipe.likeCount || 0
+    likes: recipe.likeCount || 0,
   }));
 
   const recentRecipes = [...recipes]
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .slice(0, 3);
-    console.log("Recent Recipes:", recipes);
+  console.log("Recent Recipes:", recipes);
 
   return (
     <div className="max-w-6xl mx-auto p-6">
       <h1 className="text-3xl text-center font-bold mb-6">📊 User Dashboard</h1>
-      <h2 className="text-xl font-bold mb-6 text-center">👤 Welcome, {user?.displayName || "User"}</h2>
+      <h2 className="text-xl font-bold mb-6 text-center">
+        {user?.email
+          ? `👤 Welcome, ${user.displayName || "User"}`
+          : "🔒 Please log in to view your dashboard"}
+      </h2>
+  
+        <PromotionalBanner></PromotionalBanner>
+       <Profile />
 
-      <Profile />
+
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 my-6">
@@ -80,38 +101,62 @@ const UserDashboard = () => {
               <XAxis dataKey="name" />
               <YAxis allowDecimals={false} />
               <Tooltip />
-              <Line type="monotone" dataKey="likes" stroke="#f87171" strokeWidth={2} />
+              <Line
+                type="monotone"
+                dataKey="likes"
+                stroke="#f87171"
+                strokeWidth={2}
+              />
             </LineChart>
           </ResponsiveContainer>
         </ChartCard>
       </div>
 
       {/* Recent Recipes */}
-      <div className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4">🆕 Recently Added Recipes</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {recentRecipes.map(recipe => (
-            <div key={recipe._id} className="bg-base-200 p-4 rounded-xl shadow">
-              <img
-                src={recipe.image}
-                alt={recipe.title}
-                className="w-full h-40 object-cover rounded mb-3"
-              />
-              <h3 className="text-lg font-bold">{recipe.title.trim()}</h3>
-              <p className="text-sm text-gray-600">❤️ {recipe.likeCount} Likes</p>
-              <p className="text-sm text-gray-500">
-                Added on {new Date(recipe.createdAt).toLocaleDateString()}
-              </p>
-            </div>
-          ))}
+    <div className="mb-10">
+  <h2 className="text-2xl font-semibold mb-4 text-center">
+    🆕 Recently Added Recipes
+  </h2>
+
+  {recipes.length === 0 ? (
+    <div className="">
+      <NoItem />
+    </div>
+  ) : (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {recentRecipes.map((recipe) => (
+        <div key={recipe._id} className="bg-base-200 p-4 rounded-xl shadow">
+          <img
+            src={recipe.image}
+            alt={recipe.title}
+            className="w-full h-40 object-cover rounded mb-3"
+          />
+          <h3 className="text-lg font-bold">{recipe.title.trim()}</h3>
+          <p className="text-sm text-gray-600">❤️ {recipe.likeCount} Likes</p>
+          <p className="text-sm text-gray-500">
+            Added on {new Date(recipe.createdAt).toLocaleDateString()}
+          </p>
         </div>
-      </div>
+      ))}
+    </div>
+  )}
+</div>
+
 
       {/* Action Buttons */}
       <div className="flex flex-wrap justify-center gap-4">
-        <Link to="/profile-update" className="btn btn-primary">⚙️ Update Profile</Link>
-        <Link to="/add-recipe" className="btn btn-secondary">➕ Add Recipe</Link>
-        <Link to="/my-recipes" className="btn btn-accent">📂 My Recipes</Link>
+        <Link to="/profile-update" className="btn btn-primary">
+          ⚙️ Update Profile
+        </Link>
+         <Link to="/all-recipes" className="btn btn-accent">
+          🍜 All Recipes
+        </Link>
+        <Link to="/add-recipe" className="btn btn-secondary">
+          ➕ Add Recipe
+        </Link>
+        <Link to="/my-recipe" className="btn btn-accent">
+          📂 My Recipes
+        </Link>
       </div>
     </div>
   );
