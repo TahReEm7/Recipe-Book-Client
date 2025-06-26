@@ -56,7 +56,7 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             {navLinks.map((link) => (
-              <li key={link.path}>
+              <li className="btn" key={link.path}>
                 <NavLink to={link.path}>{link.name}</NavLink>
               </li>
             ))}
@@ -74,7 +74,7 @@ const Navbar = () => {
             ) : null}
 
             {/* Always show Theme Toggle */}
-           <div className="mt-2 w-full">
+           <div className="mt-2 w-full flex justify-center">
              <ThemeToggle />
            </div>
           </ul>
